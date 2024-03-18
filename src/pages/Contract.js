@@ -5,21 +5,28 @@ import Paper from "../components/contract/Paper";
 
 const Contract = () => {
   return (
-    <AppWrap>
-      <Header>안녕하세요.</Header>
-      <Body>
-        <Paper />
-      </Body>
-      <Footer>Copyright © 2024 imellieyou. All rights reserved.</Footer>
-    </AppWrap>
+    <ContractWrap>
+      <PaperWrap>
+        <Header>안녕하세요.</Header>
+        <Body>
+          <Paper />
+        </Body>
+        <Footer>Copyright © 2024 imellieyou. All rights reserved.</Footer>
+      </PaperWrap>
+    </ContractWrap>
   );
 };
 
-const AppWrap = styled.div`
+const ContractWrap = styled.div`
+  background-color: #fff;
+  height: 100vh;
+`;
+
+const PaperWrap = styled.div`
   background-color: #4682b4;
   color: #eee;
   width: 33vw;
-  height: 100vh;
+  height: 100%;
   margin: auto;
   padding: 20px 30px;
   box-sizing: border-box;
