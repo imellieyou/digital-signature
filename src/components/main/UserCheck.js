@@ -1,20 +1,51 @@
-import React from "react";
+import { useState, useEffect } from "react";
 
 import styled from "styled-components";
-import Keypad from "./Keypad";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+
+import Keypad from "./Keypad";
 
 const UserCheck = () => {
+  const [inputValue, setInputValue] = useState("");
+  const [keypadOn, setKeypadOn] = useState(false);
+
   const navigate = useNavigate();
 
-  const moveMain = () => {
+  const handleOnChange = (e) => {};
+
+  const handleConfirmPwd = (pwd) => {
     navigate("/contract");
+  };
+
+  const handleOnClick = (key) => {
+    if (key === "back") {
+      setInputValue((prev) => prev.slice(0, -1));
+      return;
+    } else if (key === "clear") {
+      setInputValue("");
+      return;
+    } else {
+      setInputValue((prev) => prev + key);
+    }
   };
 
   return (
     <UserCheckWrap>
-      <Keypad />
-      <BtnConfirm onClick={moveMain}>확인~</BtnConfirm>
+      <Password>
+        <PwdInput
+          type="text"
+          placeholder="인증번호를 입력해주세요."
+          value={inputValue}
+          onChange={(e) => handleOnChange(e)}
+          onClick={() => setKeypadOn(!keypadOn)}
+        />
+        <BtnConfirm onClick={() => handleConfirmPwd(inputValue)}>
+          입력
+        </BtnConfirm>
+      </Password>
+      {keypadOn && <Keypad onClick={handleOnClick} />}
     </UserCheckWrap>
   );
 };
@@ -23,15 +54,23 @@ const UserCheckWrap = styled.div`
   width: 33vw;
   height: 100vh;
   background: #fff;
+  margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 60px;
   text-align: center; // 임시
-  padding: 0 30px;
+  padding: 150px 30px;
 `;
 
+const Password = styled.div`
+  width: 100%;
+`;
+
+const PwdInput = styled.input`
+  width: 50%;
+`;
 const BtnConfirm = styled.button``;
 
 export default UserCheck;
