@@ -16,7 +16,18 @@ const UserCheck = () => {
   const handleOnChange = (e) => {};
 
   const handleConfirmPwd = (pwd) => {
-    navigate("/contract");
+    axios.get("http://localhost:4000/user?id=1").then((res) => {
+      if (res.data[0].pwd === pwd) {
+        navigate("/contract");
+      } else {
+        Swal.fire({
+          text: "비밀번호가 일치하지 않습니다.",
+          icon: "error",
+          timer: 1500,
+          confirmButtonText: "닫기"
+        });
+      }
+    });
   };
 
   const handleOnClick = (key) => {
