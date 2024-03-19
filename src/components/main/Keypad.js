@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 const Keypad = ({ onClick }) => {
   const [numbers, setNumbers] = useState(["back", "clear"]);
-  const [clickedKey, setClickedKey] = useState(false);
+  const [clickedKey, setClickedKey] = useState(null);
 
   useEffect(() => {
     const numbers = Array.from({ length: 10 }, (_, index) => index);
@@ -27,9 +27,11 @@ const Keypad = ({ onClick }) => {
         return (
           <Key
             key={i}
+            name={num}
             onClick={() => onClick(num)}
-            clicked={clickedKey}
-            onMouseUp={() => setClickedKey(false)}
+            onMouseUp={() => setClickedKey(null)}
+            onMouseDown={() => setClickedKey(num)}
+            $clicked={num === clickedKey}
           >
             {num}
           </Key>
@@ -53,11 +55,10 @@ const Key = styled.button`
   width: 150px;
   height: 70px;
   background-color: white;
-  color: #bbb;
+  color: ${(props) => (props.$clicked ? "#333" : "#bbb")};
   border: 2px solid;
-  border-color: ${(props) => (props.clicked ? "black" : "#bbb")};
+  border-color: ${(props) => (props.$clicked ? "#333" : "#bbb")};
   border-radius: 10px;
   line-height: 70px;
 `;
-
 export default Keypad;
